@@ -1,6 +1,6 @@
 <?php
 /**
- * @package   Connections Business Directory Connector - WP Frontend File Manager
+ * @package   Connections Business Directory Connector - Frontend File Manager
  * @category  Extension
  * @author    Steven A. Zahm
  * @license   GPL-2.0+
@@ -8,7 +8,7 @@
  * @copyright 2020 Steven A. Zahm
  *
  * @wordpress-plugin
- * Plugin Name:       Connections Business Directory Connector - WP Frontend File Manager
+ * Plugin Name:       Connections Business Directory Connector - Frontend File Manager
  * Plugin URI:        https://connections-pro.com/
  * Description:       Adds a Content Block showing a list if link to the WordPress User's upload files.
  * Version:           1.0
@@ -16,7 +16,7 @@
  * Author URI:        https://connections-pro.com/
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * Text Domain:       connections-wp-frontend-file-manager-connector
+ * Text Domain:       connections-frontend-file-manager-connector
  * Domain Path:       /languages
  */
 
@@ -28,9 +28,9 @@ use Connections_Link;
 use WP_Query;
 use WP_User;
 
-if ( ! class_exists( 'WP_Frontend_File_Manager' ) ) {
+if ( ! class_exists( 'Frontend_File_Manager' ) ) {
 
-	class WP_Frontend_File_Manager {
+	class Frontend_File_Manager {
 
 		const VERSION = '1.0.0';
 
@@ -38,7 +38,7 @@ if ( ! class_exists( 'WP_Frontend_File_Manager' ) ) {
 		 * Stores the instance of this class.
 		 *
 		 * @since 1.0
-		 * @var   WP_Frontend_File_Manager
+		 * @var   Frontend_File_Manager
 		 */
 		private static $instance;
 
@@ -71,7 +71,7 @@ if ( ! class_exists( 'WP_Frontend_File_Manager' ) ) {
 		private $basename = '';
 
 		/**
-		 * A dummy constructor to prevent WP_Frontend_File_Manager from being loaded more than once.
+		 * A dummy constructor to prevent Frontend_File_Manager from being loaded more than once.
 		 *
 		 * @access private
 		 * @since 1.0
@@ -128,19 +128,19 @@ if ( ! class_exists( 'WP_Frontend_File_Manager' ) ) {
 
 			global $wp_roles;
 
-			$requireLogin = apply_filters( 'Connections_Directory/WP_Frontend_File_Manager/Require_Login', false );
+			$requireLogin = apply_filters( 'Connections_Directory/Frontend_File_Manager/Require_Login', false );
 
 			if ( $requireLogin ) {
 
 				$currentUser = wp_get_current_user();
 				$roles       = array_keys( $wp_roles->get_names() );
-				$roles       = apply_filters( 'Connections_Directory/WP_Frontend_File_Manager/Roles', $roles );
+				$roles       = apply_filters( 'Connections_Directory/Frontend_File_Manager/Roles', $roles );
 
 				if ( is_array( $currentUser->roles ) && empty( array_intersect( $currentUser->roles, $roles ) ) ) {
 					return;
 				}
 
-				$capability = apply_filters( 'Connections_Directory/WP_Frontend_File_Manager/Capability', 'read' );
+				$capability = apply_filters( 'Connections_Directory/Frontend_File_Manager/Capability', 'read' );
 
 				if ( ! current_user_can( $capability ) ) {
 					return;
@@ -184,7 +184,7 @@ if ( ! class_exists( 'WP_Frontend_File_Manager' ) ) {
 				 * @param WP_User  $linkedUser
 				 * @param cnOutput $entry
 				 */
-				do_action('Connections_Directory/WP_Frontend_File_Manager/Files/Before', $query, $linkedUser, $entry );
+				do_action('Connections_Directory/Frontend_File_Manager/Files/Before', $query, $linkedUser, $entry );
 
 				echo '<ul>';
 
@@ -196,7 +196,7 @@ if ( ! class_exists( 'WP_Frontend_File_Manager' ) ) {
 
 				echo '</ul>';
 
-				do_action('Connections_Directory/WP_Frontend_File_Manager/Files/After', $query, $linkedUser, $entry );
+				do_action('Connections_Directory/Frontend_File_Manager/Files/After', $query, $linkedUser, $entry );
 			}
 
 			// Reset the `$post` data to the current post in main query.
@@ -210,20 +210,20 @@ if ( ! class_exists( 'WP_Frontend_File_Manager' ) ) {
 	 *
 	 * Use this function like you would a global variable, except without needing to declare the global.
 	 *
-	 * Example: <?php $connector = WP_Frontend_File_Manager(); ?>
+	 * Example: <?php $connector = Frontend_File_Manager(); ?>
 	 *
 	 * If the main Connections class exists, fire up the connector. If not, throw an admin error notice.
 	 *
 	 * @access public
 	 * @since  1.0
 	 *
-	 * @return WP_Frontend_File_Manager|false WP_Frontend_File_Manager Instance or FALSE if Connections is not active.
+	 * @return Frontend_File_Manager|false Frontend_File_Manager Instance or FALSE if Connections is not active.
 	 */
 	function Connections_Frontend_File_Manager() {
 
 		if ( class_exists('connectionsLoad') ) {
 
-			return WP_Frontend_File_Manager::instance();
+			return Frontend_File_Manager::instance();
 
 		} else {
 
