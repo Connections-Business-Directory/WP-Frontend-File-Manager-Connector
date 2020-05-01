@@ -10,7 +10,7 @@
  * @wordpress-plugin
  * Plugin Name:       Connections Business Directory Connector - Frontend File Manager
  * Plugin URI:        https://connections-pro.com/
- * Description:       Adds a Content Block showing a list if link to the WordPress User's upload files.
+ * Description:       Adds a Content Block showing a list of links of the WordPress User's uploaded files.
  * Version:           1.0
  * Author:            Steven A. Zahm
  * Author URI:        https://connections-pro.com/
