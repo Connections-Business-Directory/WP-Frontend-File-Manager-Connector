@@ -22,6 +22,7 @@
 
 namespace Connections_Directory\Connector;
 
+use cnLicense;
 use cnOutput;
 use cnTemplate;
 use Connections_Link;
@@ -90,6 +91,17 @@ if ( ! class_exists( 'Frontend_File_Manager' ) ) {
 				$self->basename = plugin_basename( $self->file );
 
 				self::$instance->hooks();
+
+				// License and Updater.
+				if ( class_exists( 'cnLicense' ) ) {
+
+					new cnLicense(
+						__FILE__,
+						'Frontend File Manager Connector',
+						self::VERSION,
+						'Steven A. Zahm'
+					);
+				}
 			}
 
 			return self::$instance;
