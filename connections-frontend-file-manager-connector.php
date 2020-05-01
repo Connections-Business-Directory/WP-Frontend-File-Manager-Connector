@@ -221,7 +221,7 @@ if ( ! class_exists( 'Frontend_File_Manager' ) ) {
 	 */
 	function Connections_Frontend_File_Manager() {
 
-		if ( class_exists('connectionsLoad') ) {
+		if ( class_exists( 'connectionsLoad' ) && class_exists( 'Connections_Link' ) ) {
 
 			return Frontend_File_Manager::instance();
 
@@ -236,6 +236,7 @@ if ( ! class_exists( 'Frontend_File_Manager' ) ) {
 
 	/**
 	 * We'll load the extension on `plugins_loaded` so we know Connections will be loaded and ready first.
+	 * Set priority 12, so we know Link is loaded first.
 	 */
-	add_action( 'plugins_loaded', __NAMESPACE__ . '\Connections_Frontend_File_Manager' );
+	add_action( 'plugins_loaded', __NAMESPACE__ . '\Connections_Frontend_File_Manager', 12 );
 }
